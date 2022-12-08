@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+
+    <title>Document</title>
+</head>
+
+<body>
+    <h2 style="margin-left: 1rem; margin-right: 1rem;">1 Introduction</h2>
+    <hr>
+    <h4 style="margin-left: 1rem; margin-right: 1rem;">Background</h4>
+    <br>
+    <p style="margin-left: 2rem; margin-right: 2rem;">Sergei Mikhailovich Prokudin-Gorskii (1863-1944), a Russian
+        chemist and photographer, is considered as a pioneer
+        in color photography. With Tsar’s special permission and funding, he traveled across the Russian Empire, and
+        took
+        color photographs of people, daily life, buildings, landscapes, etc., documenting the early 20th-century Russia.
+        He
+        produced these color photographs by using a simple but ingenious idea: recording three exposures of every scene
+        onto a glass plate using a blue, a green, and a red filter. These negative plates is now in possession by the
+        Library
+        of Congress of U.S.A., and have been recently digitized.</p>
+    <br>
+    <p style="margin-left: 2rem; margin-right: 2rem;">For this project, we are supposed to, given an input of 3
+        grayscale images representing the intensity of each color channel in a RGB space, recreate a colored images.
+        This idea was envisioned by Sergei Mikhailovich Prokudin-Gorskii around 1907. The pictures were taken with
+        filters (glass plates) for each of the color channels, which enabled posterior aligning.</p>
+    <br>
+
+    <h2 style="margin-left: 1rem; margin-right: 1rem;">2 The Approach</h2>
+    <hr>
+    <h4 style="margin-left: 1rem; margin-right: 1rem;">Alignment</h4>
+    <br>
+    <p style="margin-left: 2rem; margin-right: 2rem;">First, we must divide the input image into three equals part.Then
+        align the second and the third parts (G and R channels) to the first one (B channel).</p>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <img src="./al1.png" alt="">
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <br>
+    <h5 style="margin-left: 1rem; margin-right: 1rem;">Normalized Cross Correlation (NCC)</h5>
+    <br>
+    <h6 style="margin-left: 2rem; margin-right: 2rem;">Formula :
+        ncc = innerproduct( image1 / ||image1||, image2 / ||image2|| )</h6>
+        <br>
+
+    <p style="margin-left: 2rem; margin-right: 2rem;">Normalized Cross-Correlation (NCC) is by definition the inverse
+        Fourier transform of the convolution of the Fourier transform of two (in this case) images, normalized using the
+        local sums and sigmas (see below). There are several ways of understanding this further, a very simple example
+        is that this normalized cross-correlation is not unlike a dot product where the result is the equivalent to the
+        cosine of the angle between the two normalized pixel intensity vectors. In addition to this, the normalized
+        cross-correlation used here is essentially a Pearson product moment correlation, where the expected value of the
+        convolution of the data sets is defined as the inverse Fourier transform of the convolution of the two Fourier
+        transforms (The equation below for nXcorr should now look more familiar). This type of correlation is a very
+        standard statistical analysis tool to ascertain the agreement between two data sets, and Fourier transforms are
+        used here purely for convenience and speed. The direct dot product or pure convolution could likewise be used,
+        but these are much slower.</p>
+
+        <br>
+        <br>
+        <p style="margin-left: 2rem; margin-right: 2rem;">Here is my ncc code: </p>
+
+            <img src="./ncc_code.png" width="750" height="250" style="margin-left: 4rem ;" alt="">
+            <br>
+            <br>
+            <br>
+            <img src="./code.png" width="900" height="500" style="margin-left: 4rem ;" alt="">
+            <br>
+            <br>
+            <br>
+
+            <p style="margin-left: 2rem; margin-right: 2rem;">In my code, I cropped images manualy. </p>
+            <br>
+            <br>
+            <br>
+
+            <img src="./enhance.png" width="500" height="300" style="margin-left: 4rem ;" alt="">
+            <br>
+            <br>
+            <br>
+            <p style="margin-left: 2rem; margin-right: 2rem;">I use sharpnes and brightness functions. </p>
+            <br>
+            <br>
+            <br>
+
+
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3">
+                <h5>Before Alignment</h5>
+                <img src="./coloured_00106v.jpg" alt="">
+                <br>
+                <img src="./coloured_00125v.jpg" alt="">
+                <br>
+                <img src="./coloured_00137v.jpg" alt="">
+                <br>
+                <img src="./coloured_00149v.jpg" alt="">
+                <br>
+                <img src="./coloured_00153v.jpg" alt="">
+                <br>
+                <img src="./coloured_01880v.jpg" alt="">
+                <br>
+                <img src="./coloured_10131v.jpg" alt="">
+                <br>
+                <img src="./coloured_31421v.jpg" alt="">
+                <br>
+            </div>
+            <div class="col-3">
+                <h5>After Alignment</h5>
+                <img src="./aligned_00106v.jpg" alt="">
+                <br>
+                <img src="./aligned_00125v.jpg" alt="">
+                <br>
+                <img src="./aligned_00137v.jpg" alt="">
+                <br>
+                <img src="./aligned_00149v.jpg" alt="">
+                <br>
+                <img src="./aligned_00153v.jpg" alt="">
+                <br>
+                <img src="./aligned_01880v.jpg" alt="">
+                <br>
+                <img src="./aligned_10131v.jpg" alt="">
+                <br>
+                <img src="./aligned_31421v.jpg" alt="">
+                <br>
+            </div>
+            <div class="col-3">
+                <h5>After Enhancement</h5>
+                <img src="./enhanced_aligned_00106v.jpg" alt="">
+                <br>
+                <img src="./enhanced_aligned_00125v.jpg" alt="">
+                <br>
+                <img src="./enhanced_aligned_00137v.jpg" alt="">
+                <br>
+                <img src="./enhanced_aligned_00149v.jpg" alt="">
+                <br>
+                <img src="./enhanced_aligned_00153v.jpg" alt="">
+                <br>
+                <img src="./enhanced_aligned_01880v.jpg" alt="">
+                <br>
+                <img src="./enhanced_aligned_10131v.jpg" alt="">
+                <br>
+                <img src="./enhanced_aligned_31421v.jpg" alt="">
+                <br>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <p style="margin-left: 2rem; margin-right: 2rem;">I couldn't get better results for some images :</p>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-4">
+                <h3 style="margin-left: 2rem; margin-right: 2rem;">After Alignment :</h3>
+            </div>
+            <div class="col-4">
+
+            </div>
+            <div class="col-4"></div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-2"></div>
+            <div class="col-2">
+                <img src="./aligned_00056v.jpg" alt="">
+                <br>
+                <img src="./aligned_00163v.jpg" alt="">
+                <br>
+            </div>
+            <div class="col-2">
+                <img src="./aligned_00194v.jpg" alt="">
+                <br>
+                <img src="./aligned_00600v.jpg" alt="">
+                <br>
+            </div>
+            <div class="col-2">
+                <img src="./aligned_00757v.jpg" alt="">
+                <br>
+                <img src="./aligned_00889v.jpg" alt="">
+                <br>
+            </div>
+            <div class="col-2">
+                <img src="./aligned_01031v.jpg" alt="">
+                <br>
+                <img src="./aligned_01597v.jpg" alt="">
+                <br>
+            </div>
+            <div class="col-2"></div>
+
+        </div>
+        <br>
+        <br>
+        <br>
+        <p style="margin-left: 2rem; margin-right: 2rem;">
+            As seen in the 8 pictures above, the program I wrote cannot properly align some images.
+        </p>
+        <p style="margin-left: 2rem; margin-right: 2rem;"></p>      
+            The reasons for this may be one or more of the following:
+        </p>
+            <p style="margin-left: 4rem; margin-right: 2rem;"></p>      
+            1-The "t" parameter I gave in the ncc algorithm is small</p>
+            <p style="margin-left: 4rem; margin-right: 2rem;"></p>      
+            2-Some of the pictures I receive as input are bad</p>
+            <p style="margin-left: 4rem; margin-right: 2rem;"></p>      
+            3-I did not implement any edge detection in my code </p>
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
